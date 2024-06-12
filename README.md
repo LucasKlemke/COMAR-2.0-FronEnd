@@ -11,4 +11,4 @@ Currently, two official plugins are available:
 2. npm run dev (backend)
 3. npm run dev (front end)
 4. Na url, colocar /system do lado para ir para o sistema
-# Se der erro verifica se o banco esta rodando, verifica se o back esta rodando tambem
+# Se der erro verifica se o banco esta rodando, verifica se o back esta rodando tambem, e tambem verifica se os dominios tanto do back quanto do front estao certos
