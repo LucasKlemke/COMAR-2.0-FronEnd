@@ -1,71 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import React from "react";
 import "./App.css";
-import { Button, Typography } from "@mui/material";
-import { Header } from "./assets/components/header/Header";
-import { Content } from "./assets/components/content/Content";
-import axios from "axios";
-import { Toaster, toast } from "sonner";
+import System from "./pages/System";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import SignIn from "./components/login/SingIn";
 
-//Default URL
-const API = "http://localhost:3000/";
-//EndPoint Projetos
-const EPPROJETOS = `${API}projeto`;
-//EndPoint Usuarios
-const EPUSUARIOS = `${API}usuario`;
-
-//Função para conectar a API
-async function connect() {
-  try {
-    let res = await axios.get(EPPROJETOS);
-
-    const resposta = res.data;
-
-    return resposta;
-  } catch (error) {
-    console.log("erro", error);
-    throw error;
-  }
-}
-
-function App() {
-  // Array de projetos
-  const [projetos, setProjetos] = useState([]);
-  // Definir ID do projeto atual
-  const [projetoAtual, setProjetoAtual] = useState("");
-
-  // Verificação para não repetir a requisição ( GET )
-  const jaFoi = useRef(false);
-
-  useEffect(() => {
-    // Verificação para não repetir a requisição ( GET )
-    if (!jaFoi.current) {
-      jaFoi.current = true;
-      connect().then((resposta) => {
-        resposta.forEach((element) => {
-          setProjetos((state) => [...state, element]);
-        });
-      });
-    }
-  });
-
-  // Mudar o ID de projeto atual
-  const handleProjetoSelect = (ev) => {
-    setProjetoAtual(ev.target.value);
-  };
-
+export default function App() {
   return (
-    <>
-      <Toaster richColors position="top-center" duration={500} />
-      <Header
-        setProjetoAtual={setProjetoAtual}
-        setProjetos={setProjetos}
-        projetos={projetos}
-        projetoAtual={projetoAtual}
-        handleProjetoSelect={handleProjetoSelect}
-      />
-      <Content setProjetos={setProjetos} setProjetoAtual={setProjetoAtual} projetoAtual={projetoAtual} projetos={projetos} API={API} />
-    </>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<SignIn />} />
+          <Route path="/system" element={<System />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
-
-export default App;
