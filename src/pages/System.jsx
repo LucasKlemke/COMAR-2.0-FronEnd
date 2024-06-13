@@ -4,7 +4,7 @@ import { Header } from "../components/header/Header";
 import { Content } from "../components/content/Content";
 import axios from "axios";
 import { Toaster, toast } from "sonner";
-import SignUp from "../components/login/SingUp";
+// import SignUp from "../components/login/SingUp";
 import SignIn from "./SingIn";
 import { Navigate, useNavigate } from "react-router-dom";
 
@@ -54,8 +54,6 @@ function System({ usuario, setUsuario }) {
       } else {
         
         let usuarioReal = response.data[0];
-        console.log(auth);
-        console.log(usuarioReal)
         if (
           auth.id != usuarioReal.id ||
           auth.email != usuarioReal.email ||
