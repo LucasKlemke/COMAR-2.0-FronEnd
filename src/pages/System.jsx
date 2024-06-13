@@ -5,7 +5,8 @@ import { Content } from "../components/content/Content";
 import axios from "axios";
 import { Toaster, toast } from "sonner";
 import SignUp from "../components/login/SingUp";
-import SignIn from "../components/login/SingIn";
+import SignIn from "./SingIn";
+import { Navigate, useNavigate } from "react-router-dom";
 
 //Default URL
 const API = "http://localhost:3000/";
@@ -28,7 +29,51 @@ async function connect() {
   }
 }
 
-function System() {
+function System({ usuario, setUsuario }) {
+  const navigate = useNavigate();
+  let auth = JSON.parse(localStorage.getItem("auth"));
+
+  useEffect(() => {
+    
+    if(auth == null){
+      navigate('/')
+    }
+
+
+    const fetchData = async (auth) => {
+      let response = await axios.get(
+        `http://localhost:3000/usuario/${auth.id}`
+      );
+      if (
+        response.data == null ||
+        response.data == undefined ||
+        response.data == "" ||
+        response.data == []
+      ) {
+        navigate("/");
+      } else {
+        
+        let usuarioReal = response.data[0];
+        console.log(auth);
+        console.log(usuarioReal)
+        if (
+          auth.id != usuarioReal.id ||
+          auth.email != usuarioReal.email ||
+          auth.senha != usuarioReal.senha ||
+          auth == null ||
+          auth == undefined ||
+          auth == ""
+        ) {
+          navigate("/");
+        } else {
+          setUsuario(auth.email)
+        }
+      }
+    };
+
+    fetchData(auth);
+  },[auth]);
+
   // Array de projetos
   const [projetos, setProjetos] = useState([]);
   // Definir ID do projeto atual
@@ -58,6 +103,8 @@ function System() {
     <>
       <Toaster richColors position="top-center" duration={500} />
       <Header
+        setUsuario={setUsuario}
+        usuario={usuario}
         setProjetoAtual={setProjetoAtual}
         setProjetos={setProjetos}
         projetos={projetos}

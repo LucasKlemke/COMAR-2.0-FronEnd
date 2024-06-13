@@ -16,12 +16,21 @@ import {
 } from "@mui/material";
 import React, { useRef, useState } from "react";
 import { NewProject } from "../content/modals/NewProject";
+import { useNavigate } from "react-router-dom";
+import Profile from "./Profile";
 
-export const Header = ({ projetos, handleProjetoSelect, projetoAtual,setProjetoAtual, setProjetos }) => {
+export const Header = ({ projetos, handleProjetoSelect, projetoAtual,setProjetoAtual, setProjetos, usuario, setUsuario }) => {
   const StyledSelect = styled(Select)({
     backgroundColor: "white",
     color: "black",
   });
+
+  const navigate = useNavigate()
+
+  const goToLoginPage = () => {
+    localStorage.removeItem('auth')
+    navigate('/')
+  }
 
   const StyledToolbar = styled(Toolbar)({
     display: "flex",
@@ -68,8 +77,9 @@ export const Header = ({ projetos, handleProjetoSelect, projetoAtual,setProjetoA
               Novo
             </Button>
           </Stack>
-          <Stack>
-            <AccountCircle fontSize="large" />
+          <Stack direction='row' spacing={2} alignItems='center'>
+            <Typography>{usuario.toUpperCase()}</Typography>
+            <Profile setUsuario={setUsuario} goToLoginPage={goToLoginPage}/>
           </Stack>
         </StyledToolbar>
       </AppBar>
