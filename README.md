@@ -25,4 +25,9 @@
 2. Tolken do backend e adaptar o front para inserção de tolken de inspiração
 3. Procurar um host ( URGENTE )
 4. Procurar por bugs e resolve-los
+5. Tirar a senha do localstorage (isso tem que ver no token)
+6. Procurar host free para testar o projeto
+7. Utilizar e testar o programa para resolver os bugs
+
+# BOA SORTE AMIGOS
 
