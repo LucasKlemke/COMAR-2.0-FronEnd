@@ -80,6 +80,7 @@ export default function Usuarios() {
         senha: password,
       });
       const id = resp.data[0].id;
+      console.log(id)
 
       const newUser = {
         id: id,

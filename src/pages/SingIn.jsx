@@ -3,8 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -18,9 +16,9 @@ import {
   errorMessage,
 } from "../components/content/toast/toast";
 import { Toaster } from "sonner";
-import { RepeatOneSharp } from "@mui/icons-material";
 import axios from "axios";
 import { Stack } from "@mui/material";
+import bcrypt from "bcryptjs";
 
 function Copyright(props) {
   return (
@@ -40,8 +38,6 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 export default function SignIn({ setUsuario }) {
@@ -54,7 +50,7 @@ export default function SignIn({ setUsuario }) {
       email: data.get("email"),
       senha: data.get("password"),
     };
-    if (usuario.email == "" || usuario.senha == "") {
+    if (usuario.email === "" || usuario.senha === "") {
       errorMessage("Você deve preencher os campos");
       return;
     }
@@ -62,24 +58,24 @@ export default function SignIn({ setUsuario }) {
     try {
       let entrou = false;
       const response = await axios.get("http://localhost:3000/usuario/");
-      response.data.forEach((element) => {
-        if (element.email == usuario.email && element.senha == usuario.senha) {
+      for (const element of response.data) {
+        const senhaValida = await bcrypt.compare(usuario.senha, element.senha);
+        if (element.email === usuario.email && senhaValida) {
           setUsuario(element.email);
-          // setValidacao(element.id)
           const usuario = {
             id: element.id,
             email: element.email,
             senha: element.senha,
           };
-          let usuariostringificado = JSON.stringify(usuario);
-          localStorage.setItem("auth", usuariostringificado)
+          localStorage.setItem("auth", JSON.stringify(usuario));
           navigate("/system");
           entrou = true;
+          break;
         }
-      });
+      }
 
       if (!entrou) {
-        errorMessage("Usuario invalido");
+        errorMessage("Usuário inválido");
       }
     } catch (error) {
       errorMessage(
@@ -137,10 +133,6 @@ export default function SignIn({ setUsuario }) {
               id="password"
               autoComplete="current-password"
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Lembrar login"
-            /> */}
             <Button
               type="submit"
               fullWidth
@@ -149,18 +141,7 @@ export default function SignIn({ setUsuario }) {
             >
               Entrar
             </Button>
-            <Grid container>
-              {/* <Grid item xs>
-                <Link href="#" variant="body2">
-                  Esqueceu a senha ?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/cadastro" variant="body2">
-                  {"Cadastrar novo usuário"}
-                </Link>
-              </Grid> */}
-            </Grid>
+            <Grid container></Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />

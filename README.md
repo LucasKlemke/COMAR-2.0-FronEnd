@@ -1,38 +1,15 @@
-# Integrantes
-
-Daniel Douglas dos Santos  
-Felipe Obertier Gesser  
-Guilherme Mafra Paluski  
-Gustavo Mafra Paluski  
-Lucas Antônio Daniel  
-Lucas Affonso Klemke
-
-# Instituto Comar
-
-O projeto realizado para o Instituto Comar possui a finalidade de fazer a gestão de projetos da ONG, como criação e exclusão dos projetos, além de cadastrar os usuários.
-
-# Tecnologias Utilizadas
-
-- [JavaScript]
-- [MySQL]
-- [HTML]
-- [CSS]
-- [Node]
-- [React]
-- [Vite]
-- [MUI]
-
 
 # Instruções
 
-1. Digite 'npm i' no console para instalar os pacotes npm necessários.
-2. Após isso, vá para a pasta Backend e digite 'npm run dev' no terminal (backend).
-3. Agora, dentro da pasta de frontend, digite 'npm run dev' no terminal (front end).
-4. Agora, acesse a tabela do banco de dados e cria um usuário para entrar no sistema (siga o modelo de banco de dados representado na pasta script).
-5. Após criar o usuário, faça login.
+1. npm i
+2. npm run dev (backend)
+3. npm run dev (front end)
+4. Criar usuario no banco de dados
+(obs : o campo email não é mais pra email, seria pra usuario,porem o nome continua email, pode escrever qualquer coisa que vai dar bom)
+5. Logar
 
 # ERROS
-1. Sempre verifique se tanto o *banco de dados*, o *backend* e o *frontend* estão sendo executados.
+1. Se der erro verifica se o banco esta rodando, verifica se o back esta rodando tambem, e tambem verifica se os dominios tanto do back quanto do front estao certos
 
 # Mapeamento
 1. Começa no App.jsx (definicao de rotas)
